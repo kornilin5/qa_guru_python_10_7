@@ -16,11 +16,3 @@ os.makedirs(TMP_PATH, exist_ok=True)
 
 
 
-# def reader_archive(archive_path, archive_file_name):
-#     archive_file_path = os.path.join(archive_path, archive_file_name)
-#     with zipfile.ZipFile(archive_file_path, 'r') as reader:
-#         text_csv = reader.read('это csv.csv').decode()
-#         text_excel = load_workbook(archive_path'эксель.xlsx'))
-#         print(reader.namelist())
-#         print (text_csv)
-#         print(F"eto exel {text_xlsx[0]}")
