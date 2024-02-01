@@ -1,18 +1,24 @@
 import os
-import shutil
-
-PROJECT_ROOT_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-RESOURCES_PATH = os.path.join(PROJECT_ROOT_PATH, "resources")
-TMP_PATH = os.path.join(PROJECT_ROOT_PATH, "tmp")
-NAME_FILES= 'пдф.pdf', 'эксель.xlsx', 'это_csv.csv'
-
-os.makedirs(RESOURCES_PATH, exist_ok=True)
-os.makedirs(TMP_PATH, exist_ok=True)
+import zipfile
+import pytest
+import os
 
 
+CURRENT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+TMP = os.path.join(CURRENT, 'tmp')
+RESOURCES = os.path.join(CURRENT, 'resources')
+ARCHIVE = os.path.join(RESOURCES, 'archive.zip')
+FILES_LIST = os.listdir(TMP)
 
-
-
-
-
-
+@pytest.fixture
+def create_zip_archive():
+    if not os.path.exists(RESOURCES):
+        os.mkdir(RESOURCES)
+    with zipfile.ZipFile(ARCHIVE, mode='w', compression=zipfile.ZIP_DEFLATED) as zf:
+        for file in FILES_LIST:
+            add_file = os.path.join(TMP, file)
+            zf.write(add_file, os.path.basename(add_file))
+    with zipfile.ZipFile(ARCHIVE, 'r') as zip_ref:
+        zip_ref.extractall(TMP)
+    yield TMP
+    os.remove(ARCHIVE)
