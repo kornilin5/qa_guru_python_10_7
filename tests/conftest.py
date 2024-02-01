@@ -1,7 +1,6 @@
 import os
 import zipfile
 import pytest
-import os
 
 
 CURRENT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
