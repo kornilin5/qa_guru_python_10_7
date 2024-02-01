@@ -53,7 +53,6 @@ def read_pdf(path_archive, folder_path, name_file):
     text = "Пример PDF файла"
     with open(path, 'rb') as file:
         reader = PdfReader(file)
-        print(reader)
         assert any(text in page.extract_text() for page in reader.pages)
 
 
